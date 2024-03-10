@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 // import { UpdatePasswordDto } from './dto/updatePassword-user.dto';
@@ -35,14 +35,20 @@ export class UserService {
       return userWithoutPassword;
     });
 
-    console.log(users, usersWithoutPassword);
-
     return usersWithoutPassword;
   }
 
-  // findOne(id: string) {
-  //   return `This action returns a #${id} user`;
-  // }
+  findOne(id: string) {
+    const user = this.databaseSevice.user.getDataById(id);
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    const { password, ...userData } = user;
+
+    return userData;
+  }
 
   // update(id: string, updatePasswordDto: UpdatePasswordDto) {
   //   return `This action updates a #${id} user`;

@@ -8,11 +8,14 @@ import {
   Delete,
   // Put,
   HttpCode,
+  // NotFoundException,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 // import { UpdatePasswordDto } from './dto/updatePassword-user.dto';
+// import { validate as uuidValidate } from 'uuid';
 
 @Controller('user')
 export class UserController {
@@ -28,11 +31,10 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   console.log(id, 'id');
-  //   return this.userService.findOne(id);
-  // }
+  @Get(':id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.findOne(id);
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
