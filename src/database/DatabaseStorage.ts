@@ -23,7 +23,8 @@ export class DatabaseStorage<T> {
     console.log('updateData');
   };
 
-  deleteData = () => {
-    console.log('deleteData');
+  deleteData = (idValue: string) => {
+    const res = this.data.delete(idValue);
+    return res;
   };
 }

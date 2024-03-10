@@ -55,6 +55,10 @@ export class UserService {
   // }
 
   remove(id: string) {
-    return `This action removes a #${id} user`;
+    const res = this.databaseSevice.user.deleteData(id);
+
+    if (!res) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
   }
 }

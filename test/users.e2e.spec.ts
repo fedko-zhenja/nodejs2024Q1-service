@@ -233,44 +233,44 @@ describe('Users (e2e)', () => {
   //   });
   // });
 
-  // describe('DELETE', () => {
-  //   it('should correctly delete user', async () => {
-  //     const response = await unauthorizedRequest
-  //       .post(usersRoutes.create)
-  //       .set(commonHeaders)
-  //       .send(createUserDto);
+  describe('DELETE', () => {
+    it('should correctly delete user', async () => {
+      const response = await unauthorizedRequest
+        .post(usersRoutes.create)
+        .set(commonHeaders)
+        .send(createUserDto);
 
-  //     const { id } = response.body;
+      const { id } = response.body;
 
-  //     expect(response.status).toBe(StatusCodes.CREATED);
+      expect(response.status).toBe(StatusCodes.CREATED);
 
-  //     const cleanupResponse = await unauthorizedRequest
-  //       .delete(usersRoutes.delete(id))
-  //       .set(commonHeaders);
+      const cleanupResponse = await unauthorizedRequest
+        .delete(usersRoutes.delete(id))
+        .set(commonHeaders);
 
-  //     expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
+      expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
 
-  //     const searchResponse = await unauthorizedRequest
-  //       .get(usersRoutes.getById(id))
-  //       .set(commonHeaders);
+      const searchResponse = await unauthorizedRequest
+        .get(usersRoutes.getById(id))
+        .set(commonHeaders);
 
-  //     expect(searchResponse.statusCode).toBe(StatusCodes.NOT_FOUND);
-  //   });
+      expect(searchResponse.statusCode).toBe(StatusCodes.NOT_FOUND);
+    });
 
-  //   it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
-  //     const response = await unauthorizedRequest
-  //       .delete(usersRoutes.delete('some-invalid-id'))
-  //       .set(commonHeaders);
+    it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
+      const response = await unauthorizedRequest
+        .delete(usersRoutes.delete('some-invalid-id'))
+        .set(commonHeaders);
 
-  //     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-  //   });
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
 
-  //   it("should respond with NOT_FOUND status code in case if user doesn't exist", async () => {
-  //     const response = await unauthorizedRequest
-  //       .delete(usersRoutes.delete(randomUUID))
-  //       .set(commonHeaders);
+    it("should respond with NOT_FOUND status code in case if user doesn't exist", async () => {
+      const response = await unauthorizedRequest
+        .delete(usersRoutes.delete(randomUUID))
+        .set(commonHeaders);
 
-  //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //   });
-  // });
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+    });
+  });
 });
