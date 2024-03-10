@@ -10,7 +10,8 @@ export class DatabaseStorage<T> {
   };
 
   getAllData = () => {
-    console.log('getAllData');
+    const users = Array.from(this.data.values());
+    return users;
   };
 
   getDataById = () => {

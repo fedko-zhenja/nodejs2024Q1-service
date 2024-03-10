@@ -1,4 +1,4 @@
-import { Injectable, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 // import { UpdatePasswordDto } from './dto/updatePassword-user.dto';
@@ -24,17 +24,21 @@ export class UserService {
 
     const { password, ...userData } = newDataUser;
 
-    // const serverResponse = {
-    //   statusCode: HttpStatus.CREATED,
-    //   user: userData,
-    // };
-
     return userData;
   }
 
-  // findAll() {
-  //   return `This action returns all user`;
-  // }
+  findAll() {
+    const users = this.databaseSevice.user.getAllData();
+
+    const usersWithoutPassword = users.map((user) => {
+      const { password, ...userWithoutPassword } = user;
+      return userWithoutPassword;
+    });
+
+    console.log(users, usersWithoutPassword);
+
+    return usersWithoutPassword;
+  }
 
   // findOne(id: string) {
   //   return `This action returns a #${id} user`;
