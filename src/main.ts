@@ -10,7 +10,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  SwaggerModule.setup('docs', app, yamlFileLoad);
+  SwaggerModule.setup('doc', app, yamlFileLoad);
 
   const configService = app.get(ConfigService);
   const port = configService.get('PORT') || 4000;
