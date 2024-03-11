@@ -41,6 +41,10 @@ export class TrackService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} track`;
+    const res = this.databaseSevice.track.deleteData(id);
+
+    if (!res) {
+      throw new NotFoundException(`Track with id ${id} not found`);
+    }
   }
 }
