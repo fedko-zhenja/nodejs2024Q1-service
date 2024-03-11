@@ -52,45 +52,45 @@ describe('Tracks (e2e)', () => {
       expect(response.body).toBeInstanceOf(Array);
     });
 
-    // it('should correctly get track by id', async () => {
-    //   const creationResponse = await unauthorizedRequest
-    //     .post(tracksRoutes.create)
-    //     .set(commonHeaders)
-    //     .send(createTrackDto);
+    it('should correctly get track by id', async () => {
+      const creationResponse = await unauthorizedRequest
+        .post(tracksRoutes.create)
+        .set(commonHeaders)
+        .send(createTrackDto);
 
-    //   const { id } = creationResponse.body;
+      const { id } = creationResponse.body;
 
-    //   expect(creationResponse.statusCode).toBe(StatusCodes.CREATED);
+      expect(creationResponse.statusCode).toBe(StatusCodes.CREATED);
 
-    //   const searchResponse = await unauthorizedRequest
-    //     .get(tracksRoutes.getById(id))
-    //     .set(commonHeaders);
+      const searchResponse = await unauthorizedRequest
+        .get(tracksRoutes.getById(id))
+        .set(commonHeaders);
 
-    //   expect(searchResponse.statusCode).toBe(StatusCodes.OK);
-    //   expect(searchResponse.body).toBeInstanceOf(Object);
+      expect(searchResponse.statusCode).toBe(StatusCodes.OK);
+      expect(searchResponse.body).toBeInstanceOf(Object);
 
-    //   const cleanupResponse = await unauthorizedRequest
-    //     .delete(tracksRoutes.delete(id))
-    //     .set(commonHeaders);
+      const cleanupResponse = await unauthorizedRequest
+        .delete(tracksRoutes.delete(id))
+        .set(commonHeaders);
 
-    //   expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
-    // });
+      expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
+    });
 
-    // it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
-    //   const response = await unauthorizedRequest
-    //     .get(tracksRoutes.getById('some-invalid-id'))
-    //     .set(commonHeaders);
+    it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
+      const response = await unauthorizedRequest
+        .get(tracksRoutes.getById('some-invalid-id'))
+        .set(commonHeaders);
 
-    //   expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-    // });
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
 
-    // it("should respond with NOT_FOUND status code in case if track doesn't exist", async () => {
-    //   const response = await unauthorizedRequest
-    //     .get(tracksRoutes.getById(randomUUID))
-    //     .set(commonHeaders);
+    it("should respond with NOT_FOUND status code in case if track doesn't exist", async () => {
+      const response = await unauthorizedRequest
+        .get(tracksRoutes.getById(randomUUID))
+        .set(commonHeaders);
 
-    //   expect(response.status).toBe(StatusCodes.NOT_FOUND);
-    // });
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+    });
   });
 
   describe('POST', () => {
