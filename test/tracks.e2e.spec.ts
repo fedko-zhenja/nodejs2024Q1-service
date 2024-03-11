@@ -142,102 +142,102 @@ describe('Tracks (e2e)', () => {
     });
   });
 
-  //   describe('PUT', () => {
-  //     it('should correctly update track match', async () => {
-  //       const creationResponse = await unauthorizedRequest
-  //         .post(tracksRoutes.create)
-  //         .set(commonHeaders)
-  //         .send(createTrackDto);
+  describe('PUT', () => {
+    it('should correctly update track match', async () => {
+      const creationResponse = await unauthorizedRequest
+        .post(tracksRoutes.create)
+        .set(commonHeaders)
+        .send(createTrackDto);
 
-  //       const { id: createdId } = creationResponse.body;
+      const { id: createdId } = creationResponse.body;
 
-  //       expect(creationResponse.status).toBe(StatusCodes.CREATED);
+      expect(creationResponse.status).toBe(StatusCodes.CREATED);
 
-  //       const updateResponse = await unauthorizedRequest
-  //         .put(tracksRoutes.update(createdId))
-  //         .set(commonHeaders)
-  //         .send({
-  //           name: createTrackDto.name,
-  //           duration: 188,
-  //           artistId: createTrackDto.artistId,
-  //           albumId: createTrackDto.albumId,
-  //         });
+      const updateResponse = await unauthorizedRequest
+        .put(tracksRoutes.update(createdId))
+        .set(commonHeaders)
+        .send({
+          name: createTrackDto.name,
+          duration: 188,
+          artistId: createTrackDto.artistId,
+          albumId: createTrackDto.albumId,
+        });
 
-  //       expect(updateResponse.statusCode).toBe(StatusCodes.OK);
+      expect(updateResponse.statusCode).toBe(StatusCodes.OK);
 
-  //       const {
-  //         id: updatedId,
-  //         name,
-  //         duration,
-  //         artistId,
-  //         albumId,
-  //       } = updateResponse.body;
+      const {
+        id: updatedId,
+        name,
+        duration,
+        artistId,
+        albumId,
+      } = updateResponse.body;
 
-  //       expect(name).toBe(createTrackDto.name);
-  //       expect(artistId).toBe(createTrackDto.artistId);
-  //       expect(albumId).toBe(createTrackDto.albumId);
-  //       expect(typeof duration).toBe('number');
-  //       expect(validate(updatedId)).toBe(true);
-  //       expect(createdId).toBe(updatedId);
+      expect(name).toBe(createTrackDto.name);
+      expect(artistId).toBe(createTrackDto.artistId);
+      expect(albumId).toBe(createTrackDto.albumId);
+      expect(typeof duration).toBe('number');
+      expect(validate(updatedId)).toBe(true);
+      expect(createdId).toBe(updatedId);
 
-  //       const cleanupResponse = await unauthorizedRequest
-  //         .delete(tracksRoutes.delete(createdId))
-  //         .set(commonHeaders);
+      const cleanupResponse = await unauthorizedRequest
+        .delete(tracksRoutes.delete(createdId))
+        .set(commonHeaders);
 
-  //       expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
-  //     });
+      expect(cleanupResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
+    });
 
-  //     it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
-  //       const response = await unauthorizedRequest
-  //         .put(tracksRoutes.update('some-invalid-id'))
-  //         .set(commonHeaders)
-  //         .send({
-  //           name: createTrackDto.name,
-  //           duration: 188,
-  //           artistId: createTrackDto.artistId,
-  //           albumId: createTrackDto.albumId,
-  //         });
+    it('should respond with BAD_REQUEST status code in case of invalid id', async () => {
+      const response = await unauthorizedRequest
+        .put(tracksRoutes.update('some-invalid-id'))
+        .set(commonHeaders)
+        .send({
+          name: createTrackDto.name,
+          duration: 188,
+          artistId: createTrackDto.artistId,
+          albumId: createTrackDto.albumId,
+        });
 
-  //       expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-  //     });
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
 
-  //     it('should respond with BAD_REQUEST status code in case of invalid dto', async () => {
-  //       const creationResponse = await unauthorizedRequest
-  //         .post(tracksRoutes.create)
-  //         .set(commonHeaders)
-  //         .send(createTrackDto);
+    it('should respond with BAD_REQUEST status code in case of invalid dto', async () => {
+      const creationResponse = await unauthorizedRequest
+        .post(tracksRoutes.create)
+        .set(commonHeaders)
+        .send(createTrackDto);
 
-  //       const { id: createdId } = creationResponse.body;
+      const { id: createdId } = creationResponse.body;
 
-  //       expect(creationResponse.status).toBe(StatusCodes.CREATED);
+      expect(creationResponse.status).toBe(StatusCodes.CREATED);
 
-  //       const response = await unauthorizedRequest
-  //         .put(tracksRoutes.update(createdId))
-  //         .set(commonHeaders)
-  //         .send({
-  //           name: null,
-  //           duration: '188',
-  //           artistId: 123,
-  //           albumId: 123,
-  //         });
+      const response = await unauthorizedRequest
+        .put(tracksRoutes.update(createdId))
+        .set(commonHeaders)
+        .send({
+          name: null,
+          duration: '188',
+          artistId: 123,
+          albumId: 123,
+        });
 
-  //       expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-  //     });
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
 
-  //     it("should respond with NOT_FOUND status code in case if track doesn't exist", async () => {
-  //       const response = await unauthorizedRequest
-  //         .put(tracksRoutes.update(randomUUID))
-  //         .set(commonHeaders)
-  //         .send({
-  //           name: createTrackDto.name,
-  //           duration: 188,
-  //           artistId: createTrackDto.artistId,
-  //           albumId: createTrackDto.albumId,
-  //         });
+    it("should respond with NOT_FOUND status code in case if track doesn't exist", async () => {
+      const response = await unauthorizedRequest
+        .put(tracksRoutes.update(randomUUID))
+        .set(commonHeaders)
+        .send({
+          name: createTrackDto.name,
+          duration: 188,
+          artistId: createTrackDto.artistId,
+          albumId: createTrackDto.albumId,
+        });
 
-  //       expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //     });
-  //   });
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+    });
+  });
 
   describe('DELETE', () => {
     it('should correctly delete track', async () => {

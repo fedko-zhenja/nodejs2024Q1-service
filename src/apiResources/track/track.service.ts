@@ -11,33 +11,55 @@ export class TrackService {
   create(createTrackDto: CreateTrackDto) {
     const idValue = uuidv4();
 
-    const newDataUser = {
+    const newDataTrack = {
       id: idValue,
       ...createTrackDto,
     };
 
-    this.databaseSevice.track.createData(idValue, newDataUser);
+    this.databaseSevice.track.createData(idValue, newDataTrack);
 
-    return newDataUser;
+    return newDataTrack;
   }
 
   findAll() {
-    const tracks = this.databaseSevice.user.getAllData();
+    const tracks = this.databaseSevice.track.getAllData();
     return tracks;
   }
 
   findOne(id: string) {
-    const user = this.databaseSevice.track.getDataById(id);
+    const track = this.databaseSevice.track.getDataById(id);
 
-    if (!user) {
+    if (!track) {
       throw new NotFoundException(`Track with id ${id} not found`);
     }
 
-    return user;
+    return track;
   }
 
   update(id: string, updateTrackDto: UpdateTrackDto) {
-    return `This action updates a #${id} track`;
+    const track = this.databaseSevice.track.updateData(id);
+
+    if (!track) {
+      throw new NotFoundException(`Track with id ${id} not found`);
+    }
+
+    if (updateTrackDto.name) {
+      track.name = updateTrackDto.name;
+    }
+
+    if (updateTrackDto.duration) {
+      track.duration = updateTrackDto.duration;
+    }
+
+    if (updateTrackDto.albumId) {
+      track.albumId = updateTrackDto.albumId;
+    }
+
+    if (updateTrackDto.artistId) {
+      track.artistId = updateTrackDto.artistId;
+    }
+
+    return track;
   }
 
   remove(id: string) {
