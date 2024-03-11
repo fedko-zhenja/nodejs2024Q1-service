@@ -68,5 +68,13 @@ export class TrackService {
     if (!res) {
       throw new NotFoundException(`Track with id ${id} not found`);
     }
+
+    const favoriteTracks = this.databaseSevice.favorites.tracks;
+
+    if (favoriteTracks.includes(id)) {
+      const trackIndex = favoriteTracks.indexOf(id);
+
+      favoriteTracks.splice(trackIndex, 1);
+    }
   }
 }

@@ -75,5 +75,13 @@ export class ArtistService {
         album.artistId = null;
       }
     });
+
+    const favoriteArtists = this.databaseSevice.favorites.artists;
+
+    if (favoriteArtists.includes(id)) {
+      const artistIndex = favoriteArtists.indexOf(id);
+
+      favoriteArtists.splice(artistIndex, 1);
+    }
   }
 }

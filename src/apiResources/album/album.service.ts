@@ -65,5 +65,13 @@ export class AlbumService {
         track.albumId = null;
       }
     });
+
+    const favoriteAlbum = this.databaseSevice.favorites.albums;
+
+    if (favoriteAlbum.includes(id)) {
+      const albumIndex = favoriteAlbum.indexOf(id);
+
+      favoriteAlbum.splice(albumIndex, 1);
+    }
   }
 }
