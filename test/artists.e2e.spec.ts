@@ -301,46 +301,46 @@ describe('artist (e2e)', () => {
       expect(trackArtistId).toBeNull();
     });
 
-    // it('should set album.artistId to null after deletion', async () => {
-    //   const creationArtistResponse = await unauthorizedRequest
-    //     .post(artistsRoutes.create)
-    //     .set(commonHeaders)
-    //     .send(createArtistDto);
+    it('should set album.artistId to null after deletion', async () => {
+      const creationArtistResponse = await unauthorizedRequest
+        .post(artistsRoutes.create)
+        .set(commonHeaders)
+        .send(createArtistDto);
 
-    //   const { id: artistId } = creationArtistResponse.body;
+      const { id: artistId } = creationArtistResponse.body;
 
-    //   const createAlbumDto = {
-    //     name: 'TEST_album',
-    //     year: 2023,
-    //     artistId,
-    //   };
+      const createAlbumDto = {
+        name: 'TEST_album',
+        year: 2023,
+        artistId,
+      };
 
-    //   expect(creationArtistResponse.status).toBe(StatusCodes.CREATED);
+      expect(creationArtistResponse.status).toBe(StatusCodes.CREATED);
 
-    //   const creationAlbumResponse = await unauthorizedRequest
-    //     .post(albumsRoutes.create)
-    //     .set(commonHeaders)
-    //     .send(createAlbumDto);
+      const creationAlbumResponse = await unauthorizedRequest
+        .post(albumsRoutes.create)
+        .set(commonHeaders)
+        .send(createAlbumDto);
 
-    //   const { id: albumId } = creationAlbumResponse.body;
+      const { id: albumId } = creationAlbumResponse.body;
 
-    //   expect(creationAlbumResponse.statusCode).toBe(StatusCodes.CREATED);
+      expect(creationAlbumResponse.statusCode).toBe(StatusCodes.CREATED);
 
-    //   const artistDeletionResponse = await unauthorizedRequest
-    //     .delete(artistsRoutes.delete(artistId))
-    //     .set(commonHeaders);
+      const artistDeletionResponse = await unauthorizedRequest
+        .delete(artistsRoutes.delete(artistId))
+        .set(commonHeaders);
 
-    //   expect(artistDeletionResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
+      expect(artistDeletionResponse.statusCode).toBe(StatusCodes.NO_CONTENT);
 
-    //   const searchAlbumResponse = await unauthorizedRequest
-    //     .get(albumsRoutes.getById(albumId))
-    //     .set(commonHeaders);
+      const searchAlbumResponse = await unauthorizedRequest
+        .get(albumsRoutes.getById(albumId))
+        .set(commonHeaders);
 
-    //   expect(searchAlbumResponse.statusCode).toBe(StatusCodes.OK);
+      expect(searchAlbumResponse.statusCode).toBe(StatusCodes.OK);
 
-    //   const { artistId: albumArtistId } = searchAlbumResponse.body;
+      const { artistId: albumArtistId } = searchAlbumResponse.body;
 
-    //   expect(albumArtistId).toBeNull();
-    // });
+      expect(albumArtistId).toBeNull();
+    });
   });
 });

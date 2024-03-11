@@ -68,12 +68,12 @@ export class ArtistService {
       }
     });
 
-    // const allAlbums = this.databaseSevice.album.getAllData();
+    const allAlbums = this.databaseSevice.album.getAllData();
 
-    // allAlbums.forEach((album) => {
-    //   if (album.artistId === id) {
-    //     album.artistId = null;
-    //   }
-    // });
+    allAlbums.forEach((album) => {
+      if (album.artistId === id) {
+        album.artistId = null;
+      }
+    });
   }
 }
