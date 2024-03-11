@@ -19,8 +19,9 @@ export class DatabaseStorage<T> {
     return user;
   };
 
-  updateData = () => {
-    console.log('updateData');
+  updateData = (idValue: string) => {
+    const user = this.data.get(idValue);
+    return user;
   };
 
   deleteData = (idValue: string) => {
