@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseStorage } from './databaseStorage';
+import { DatabaseStorage } from 'src/database/DatabaseStorage';
 import { User } from 'src/apiResources/user/types/type';
 import { Artist } from 'src/apiResources/artist/types/type';
 import { Track } from 'src/apiResources/track/types/type';
