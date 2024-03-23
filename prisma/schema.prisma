@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  login     String     @unique
+  password  String
+  version   Int        @default(1)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Favorite  Favorite[]
+
+  @@map("users")
+}
+
+model Artist {
+  id     String  @id @default(uuid())
+  grammy Boolean @default(false)
+  name   String
+  albums Album[]
+  tracks Track[]
+
+  favorites Favorite[] @relation("FavoriteToArtist")
+
+  @@map("artists")
+}
+
+model Album {
+  id       String  @id @default(uuid())
+  year     Int
+  name     String
+  tracks   Track[]
+  artistId String
+  artist   Artist  @relation(fields: [artistId], references: [id])
+
+  favorites Favorite[] @relation("FavoriteToAlbum")
+
+  @@map("albums")
+}
+
+model Track {
+  id       String  @id @default(uuid())
+  name     String
+  duration Int
+  artistId String?
+  albumId  String?
+  artist   Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  album    Album?  @relation(fields: [albumId], references: [id], onDelete: SetNull)
+
+  favorites Favorite[] @relation("FavoriteToTrack")
+
+  @@map("tracks")
+}
+
+model Favorite {
+  favoriteId String   @id @default(uuid())
+  artists    Artist[] @relation("FavoriteToArtist")
+  albums     Album[]  @relation("FavoriteToAlbum")
+  tracks     Track[]  @relation("FavoriteToTrack")
+  userId     String // Предполагается, что у каждого пользователя может быть свой список избранных, добавляем ссылку на пользователя
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("favorites")
+}
+
+// model User {
+//   id        String   @id @default(uuid()) // uuid v4
+//   login     String   @unique
+//   password  String
+//   version   Int      @default(1) // integer number, increments on update
+//   createdAt DateTime @default(now()) // timestamp of creation
+//   updatedAt DateTime @updatedAt // timestamp of last update
+
+//   // Favorites Favorites[]
+//   @@map("users")
+// }
+
+// model Artist {
+//   id        String     @id @default(uuid()) // uuid v4
+//   name      String
+//   grammy    Boolean
+//   tracks    Track[]
+//   albums    Album[]
+//   favorites Favorites? @relation(fields: [favoritesId], references: [id])
+//   // favoritesId String?
+// }
+
+// // Модель данных для трека
+// model Track {
+//   id          String     @id @default(uuid()) // uuid v4
+//   name        String
+//   artist      Artist?    @relation(fields: [artistId], references: [id]) // ссылка на артиста
+//   artistId    String? // id артиста, может быть null
+//   album       Album?     @relation(fields: [albumId], references: [id]) // ссылка на альбом
+//   albumId     String? // id альбома, может быть null
+//   duration    Int // integer number
+//   Favorites   Favorites? @relation(fields: [favoritesId], references: [id])
+//   favoritesId String?
+// }
+
+// // Модель данных для альбома
+// model Album {
+//   id          String     @id @default(uuid()) // uuid v4
+//   name        String
+//   year        Int
+//   artist      Artist?    @relation(fields: [artistId], references: [id]) // ссылка на артиста
+//   artistId    String? // id артиста, может быть null
+//   Track       Track[]
+//   Favorites   Favorites? @relation(fields: [favoritesId], references: [id])
+//   favoritesId String?
+// }
+
+// // Модель данных для избранного
+// model Favorites {
+//   id      String   @id @default(uuid()) // uuid v4
+//   user    User     @relation(fields: [userId], references: [id]) // ссылка на пользователя
+//   userId  String // id пользователя
+//   artists Artist[] @relation(references: [id]) // список артистов в избранном
+//   albums  Album[]  @relation(references: [id]) // список альбомов в избранном
+//   tracks  Track[]  @relation(references: [id]) // список треков в избранном
+// }

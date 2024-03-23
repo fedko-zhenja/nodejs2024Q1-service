@@ -8,6 +8,7 @@ import { AlbumModule } from './apiResources/album/album.module';
 import { FavoritesModule } from './apiResources/favorites/favorites.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { DatabaseModule } from './database/database.module';
     FavoritesModule,
     ConfigModule.forRoot(),
     DatabaseModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
