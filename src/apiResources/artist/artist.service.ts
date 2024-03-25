@@ -35,13 +35,13 @@ export class ArtistService {
 
   async findOne(id: string) {
     // const atrist = this.databaseSevice.artist.getDataById(id);
-    const atrist = await this.prisma.artist.findUnique({ where: { id } });
+    const artist = await this.prisma.artist.findUnique({ where: { id } });
 
-    if (!atrist) {
+    if (!artist) {
       throw new NotFoundException(`Atrist with id ${id} not found`);
     }
 
-    return atrist;
+    return artist;
   }
 
   async update(id: string, updateArtistDto: UpdateArtistDto) {

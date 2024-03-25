@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 datasource db {
@@ -14,15 +15,15 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(uuid())
-  login     String     @unique
+  id        String   @id @default(uuid())
+  login     String   @unique
   password  String
-  version   Int        @default(1)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  Favorite  Favorite[]
+  version   Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Favorite  Favorite[]
 
-  @@map("users")
+  // @@map("users")
 }
 
 model Artist {
@@ -32,9 +33,9 @@ model Artist {
   albums Album[]
   tracks Track[]
 
-  favorites Favorite[] @relation("FavoriteToArtist")
+  // favorites Favorite[] @relation("FavoriteToArtist")
 
-  @@map("artists")
+  // @@map("artists")
 }
 
 model Album {
@@ -42,12 +43,12 @@ model Album {
   year     Int
   name     String
   tracks   Track[]
-  artistId String
-  artist   Artist  @relation(fields: [artistId], references: [id])
+  artistId String?
+  artist   Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
 
-  favorites Favorite[] @relation("FavoriteToAlbum")
+  // favorites Favorite[] @relation("FavoriteToAlbum")
 
-  @@map("albums")
+  // @@map("albums")
 }
 
 model Track {
@@ -59,75 +60,22 @@ model Track {
   artist   Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
   album    Album?  @relation(fields: [albumId], references: [id], onDelete: SetNull)
 
-  favorites Favorite[] @relation("FavoriteToTrack")
+  // favorites Favorite[] @relation("FavoriteToTrack")
 
-  @@map("tracks")
+  // @@map("tracks")
 }
 
 model Favorite {
-  favoriteId String   @id @default(uuid())
-  artists    Artist[] @relation("FavoriteToArtist")
-  albums     Album[]  @relation("FavoriteToAlbum")
-  tracks     Track[]  @relation("FavoriteToTrack")
-  userId     String // Предполагается, что у каждого пользователя может быть свой список избранных, добавляем ссылку на пользователя
-  user       User     @relation(fields: [userId], references: [id])
+  favoriteId String @id @default(uuid())
+  // artists    Artist[] @relation("FavoriteToArtist")
+  // albums     Album[]  @relation("FavoriteToAlbum")
+  // tracks     Track[]  @relation("FavoriteToTrack")
+  // userId     String // Предполагается, что у каждого пользователя может быть свой список избранных, добавляем ссылку на пользователя
+  // user       User     @relation(fields: [userId], references: [id])
 
-  @@map("favorites")
+  // @@map("favorites")
+  // favoriteId String   @id @default(uuid())
+  artists String[]
+  albums  String[]
+  tracks  String[]
 }
-
-// model User {
-//   id        String   @id @default(uuid()) // uuid v4
-//   login     String   @unique
-//   password  String
-//   version   Int      @default(1) // integer number, increments on update
-//   createdAt DateTime @default(now()) // timestamp of creation
-//   updatedAt DateTime @updatedAt // timestamp of last update
-
-//   // Favorites Favorites[]
-//   @@map("users")
-// }
-
-// model Artist {
-//   id        String     @id @default(uuid()) // uuid v4
-//   name      String
-//   grammy    Boolean
-//   tracks    Track[]
-//   albums    Album[]
-//   favorites Favorites? @relation(fields: [favoritesId], references: [id])
-//   // favoritesId String?
-// }
-
-// // Модель данных для трека
-// model Track {
-//   id          String     @id @default(uuid()) // uuid v4
-//   name        String
-//   artist      Artist?    @relation(fields: [artistId], references: [id]) // ссылка на артиста
-//   artistId    String? // id артиста, может быть null
-//   album       Album?     @relation(fields: [albumId], references: [id]) // ссылка на альбом
-//   albumId     String? // id альбома, может быть null
-//   duration    Int // integer number
-//   Favorites   Favorites? @relation(fields: [favoritesId], references: [id])
-//   favoritesId String?
-// }
-
-// // Модель данных для альбома
-// model Album {
-//   id          String     @id @default(uuid()) // uuid v4
-//   name        String
-//   year        Int
-//   artist      Artist?    @relation(fields: [artistId], references: [id]) // ссылка на артиста
-//   artistId    String? // id артиста, может быть null
-//   Track       Track[]
-//   Favorites   Favorites? @relation(fields: [favoritesId], references: [id])
-//   favoritesId String?
-// }
-
-// // Модель данных для избранного
-// model Favorites {
-//   id      String   @id @default(uuid()) // uuid v4
-//   user    User     @relation(fields: [userId], references: [id]) // ссылка на пользователя
-//   userId  String // id пользователя
-//   artists Artist[] @relation(references: [id]) // список артистов в избранном
-//   albums  Album[]  @relation(references: [id]) // список альбомов в избранном
-//   tracks  Track[]  @relation(references: [id]) // список треков в избранном
-// }

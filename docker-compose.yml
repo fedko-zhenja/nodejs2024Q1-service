@@ -1,15 +1,22 @@
 version: '3.8'
 services:
-  # app:
-  #   build: .
-  #   volumes:
-  #      - ./src:/app/src 
-  #   environment:
-  #     - PORT=4000
-  #   ports:
-  #     - "4000:4000"
-  #   command: ["npm", "run", "start:dev"]
-  #   restart: unless-stopped
+  app:
+    build: .
+    volumes:
+       - ./src:/app/src 
+    # environment:
+    #   - PORT=4000
+    #   - DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/postgres-db?schema=public
+    env_file:
+      - .env
+    ports:
+      - "4000:4000"
+    # command: ["npm", "run", "start:dev"]
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - mynetwork
 
 #   db:
 #     image: postgres:latest
@@ -25,7 +32,8 @@ services:
 #   db-data:
 
   postgres:
-    image: postgres:13.5
+    # image: 
+    build: ./db
     restart: always
     environment:
       - POSTGRES_USER=myuser
@@ -35,6 +43,13 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+    networks:
+      - mynetwork
 
 volumes:
   postgres:
+networks:
+  mynetwork: 
+    name: mynetwork
+    driver: bridge
+  

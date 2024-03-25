@@ -28,7 +28,15 @@ export class UserService {
 
     const newDataUser = await this.prisma.user.create({ data: createUserDto });
 
-    const { password, ...userData } = newDataUser;
+    // const { password, ...userData } = newDataUser;
+
+    const userData = {
+      id: newDataUser.id,
+      login: newDataUser.login,
+      version: newDataUser.version,
+      createdAt: newDataUser.createdAt.getTime(),
+      updatedAt: newDataUser.updatedAt.getTime(),
+    };
 
     return userData;
   }
@@ -86,7 +94,15 @@ export class UserService {
     // user.version = newVersion;
     // user.updatedAt = newUpdatedAt;
 
-    const { password, ...userData } = updateUser;
+    // const { password, ...userData } = updateUser;
+
+    const userData = {
+      id: updateUser.id,
+      login: updateUser.login,
+      version: updateUser.version,
+      createdAt: updateUser.createdAt.getTime(),
+      updatedAt: updateUser.updatedAt.getTime(),
+    };
 
     return userData;
   }

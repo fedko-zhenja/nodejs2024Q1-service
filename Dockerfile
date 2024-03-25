@@ -1,12 +1,13 @@
-FROM node:latest as builder
+FROM node:20.11.1 as builder
 
 WORKDIR /app
 
-COPY package*.json ./
+# COPY package*.json ./
 
-# COPY . .
+COPY . .
 
-RUN npm install
+RUN npm install -g npm@10.5.0 && npm install && npm cache clean --force
+RUN npx prisma generate
 
 # ENV PORT 4000
 
@@ -18,10 +19,10 @@ RUN npm install
 
 #-------------------------------------------------
 
-FROM node:latest
+FROM node:20.11.1-alpine
 WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
-COPY . .
-VOLUME [ "/app/src/database" ]
-CMD [ "npm", "run", "start:dev" ]
+COPY --from=builder /app /app
+# COPY . .
+# VOLUME [ "/app/src/database" ]
+CMD [ "npm", "run", "start:migrate-dev" ]
 # CMD [ "npm", "start" ]
