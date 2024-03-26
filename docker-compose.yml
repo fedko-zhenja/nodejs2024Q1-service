@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  app:
+    image: zhenja/nodejs2024q1-service-app:latest
+    build: .
+    volumes:
+       - ./src:/app/src 
+    # environment:
+    #   - PORT=4000
+    #   - DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/postgres-db?schema=public
+    env_file:
+      - .env
+    ports:
+      - "4000:4000"
+    # command: ["npm", "run", "start:dev"]
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - mynetwork
+
+#   db:
+#     image: postgres:latest
+#     volumes:
+#       - db-data:/var/lib/postgresql/data
+#     environment:
+#       - POSTGRES_DB=mydatabase
+#       - POSTGRES_USER=myuser
+#       - POSTGRES_PASSWORD=mypassword
+#     restart: unless-stopped
+
+# volumes:
+#   db-data:
+
+  postgres:
+    image: zhenja/nodejs2024q1-service-postgres:latest
+    build: ./db
+    restart: always
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=postgres-db
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - mynetwork
+
+volumes:
+  postgres:
+networks:
+  mynetwork: 
+    name: mynetwork
+    driver: bridge
+  
