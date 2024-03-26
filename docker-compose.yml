@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   app:
+    image: zhenja/nodejs2024q1-service-app:latest
     build: .
     volumes:
        - ./src:/app/src 
@@ -32,7 +33,7 @@ services:
 #   db-data:
 
   postgres:
-    # image: 
+    image: zhenja/nodejs2024q1-service-postgres:latest
     build: ./db
     restart: always
     environment:

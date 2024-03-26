@@ -23,7 +23,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
 
     "clean-doc": "docker-compose down --rmi all",
-    "build-doc": "docker-compose up --build"
+    "build-doc": "docker-compose up --build",
+    "scanning:vulnerabilities": "docker scout cves zhenja/nodejs2024Q1-service-app:latest && docker scout cves zhenja/nodejs2024Q1-service-postgres:latest"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
